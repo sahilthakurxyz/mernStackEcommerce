@@ -1,0 +1,228 @@
+.main-container{
+    position: fixed;
+ display: flex;
+
+   z-index: 3;
+    top:0;
+    left: 0;
+    width: 99vw;
+    background: #fff;
+    height: 6rem;
+    color: #111;
+    
+   
+}
+.main-container .navmenu_container{
+    display: flex;
+    width: 93vw;
+    height: 100%;
+    margin-left: 6rem;
+ align-items: center;
+
+    justify-content: space-evenly;
+    color: #111;
+}
+
+
+  .navmenu_container .navmenu_sameClass_name{
+    font-family: 'Merriweather', serif;
+
+  }
+   .products-menu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 5rem;
+    height: 3rem;
+    padding: 4px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.3);
+  }
+ .products-menu:hover{
+    border: 1px solid gray;
+    box-shadow: 1px 1px 5px 1px #fff;
+    cursor: pointer;
+  }
+  .products-menu > svg{
+    font-size: 25px;
+    color: gray;
+  }
+ .products-menu > p{
+   margin-bottom: 5px;
+    font-family: 'Rubik', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .navmenu_search .search_container {
+    display: flex;
+   
+  }
+  
+  .search_container input {
+    width: 35vw;
+    padding: 12px;
+    border: none;
+    padding: 1vmax 4vmax;
+    border-radius: 10px 3px 3px 10px;
+    outline: none;
+    font-size: 13px;
+    background: #ffffff;
+    color: #0a0303;
+    font-family: 'Raboto', sans-serif;
+    font-weight: 500;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  
+  .search_container button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 0px;
+    left: -3vmax;
+    width: 70px;
+    height: 45px;
+    background-color: rgb(235, 235, 235);
+    border-radius: 15px 20px 20px 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+  }
+  
+  .search_icon {
+    fill: #111;
+    font-size: 15px;
+ 
+  }
+  
+  .search_button:hover {
+    background-color: gray;
+  }
+  
+  
+
+  .navmenu_cart{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 1rem;
+    width: 5rem;
+    height: 3rem;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+  }
+  .navmenu_cart:hover{
+    box-shadow: 1px 1px 5px 1px #fff;
+    border: 1px solid gray;
+  }
+  .navmenu-cart-title{
+    position: relative;
+    top: 7px;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'Rubik', sans-serif;
+  }
+  @media (max-width: 600px) {
+    .main-container{
+      position: relative;
+   display: flex;
+     z-index: 3;
+      top:0;
+      left: 0;
+      width: 97vw;
+      background: #232F3E;
+      height: 3rem;
+      padding-bottom: 7px;
+      box-shadow: 1px 3px 5px -1px rgba(0, 0, 0, 0.5);
+  }
+  .main-container .navmenu_container{
+    display: flex;
+    width: 93vw;
+    height: 100%;
+    margin-left: 3rem;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+    padding-left: 9px;
+}
+.navmenu_container .navmenu_sameClass_name{
+  font-size: 13px;
+  font-family: 'Merriweather', serif;
+
+}
+.navmanu_products{
+  display: none;
+}
+  .navmenu_search .search_container {
+    display: flex;
+    margin-left: -0.5rem;
+    border-bottom: none;
+    height: 5vh;
+    background-color: black;
+    align-items: center;
+    border-radius: 10px;
+
+    width: 68vw;
+
+  } 
+  .navmenu_search .search_input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    font-size: 13px;
+    color: #fff;
+    background-color: black;
+    font-weight: 500;
+  }
+  .navmenu_search  .search_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    color: #fff;
+    width: 6vw;
+    height: 6vh;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1em;
+  }
+  .navmenu_search  .search_button:hover {
+   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    color: #fff;
+    width: 6.2vw;
+    height: 6.1vh;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    padding: 10px;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 1em;
+  }
+    .navmenu_category {
+      display: none;
+    }
+    .account_dropdown{
+      display: none;
+    }
+    .navmenu_cart{
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      right: 1rem;
+      width: 4rem;
+      height: 3rem;
+      box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.3);
+    }
+  }
