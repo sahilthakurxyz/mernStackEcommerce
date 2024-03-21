@@ -14,7 +14,7 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
   require("dotenv").config({ path: "backend/config/.env" });
 }
 const corsOptions = {
-  origin: "http://localhost:3000", // Replace with the actual origin of your frontend
+  origin: process.env.FRONTEND_URL, // Replace with the actual origin of your frontend
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 204,
