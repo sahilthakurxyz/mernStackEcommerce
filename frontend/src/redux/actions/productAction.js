@@ -1,3 +1,4 @@
+import { BACKEND_URL, BACKEND_URL_PROD } from "../../constants";
 import {
   allProductRequest,
   allProductSuccess,
@@ -38,9 +39,9 @@ export const getProducts =
   async (dispatch) => {
     try {
       dispatch(allProductRequest());
-      let reqLink = `/api/ecommerce/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
+      let reqLink = `${BACKEND_URL_PROD}/api/ecommerce/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
       if (category) {
-        reqLink = `/api/ecommerce/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&ratings[gte]=${ratings}`;
+        reqLink = `${BACKEND_URL_PROD}/api/ecommerce/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&ratings[gte]=${ratings}`;
       }
 
       const { data } = await axios.get(reqLink);
@@ -62,7 +63,9 @@ export const getProducts =
 export const getAdminProduct = () => async (dispatch) => {
   try {
     dispatch(adminProductsRequest());
-    const { data } = await axios.get("/api/ecommerce/v1/admin/products");
+    const { data } = await axios.get(
+      `${BACKEND_URL}/api/ecommerce/v1/admin/products`
+    );
 
     dispatch(adminProductsSuccess(data.products));
   } catch (error) {
@@ -76,7 +79,9 @@ export const clearAllErrors = () => async (dispatch) => {
 export const getProductDetails = (id) => async (dispatch) => {
   try {
     dispatch(productDetailRequest());
-    const { data } = await axios.get(`/api/ecommerce/v1/product/${id}`);
+    const { data } = await axios.get(
+      `${BACKEND_URL}/ecommerce/v1/product/${id}`
+    );
     dispatch(productDetailSuccess(data));
   } catch (error) {
     dispatch(productDetailFail(error.response.data.message));
@@ -91,7 +96,7 @@ export const createNewProduct = (productData) => async (dispatch) => {
     dispatch(newProductRequest());
     const config = { headers: { "Content-Type": "multipart/form-data" } };
     const { data } = await axios.post(
-      "/api/ecommerce/v1/admin/product/new",
+      "https://mernstackecommerce-1.onrender.com/api/ecommerce/v1/admin/product/new",
       productData,
       config
     );
@@ -107,7 +112,7 @@ export const deleteProduct = (id) => async (dispatch) => {
     dispatch(deleteProductRequest());
 
     const { data } = await axios.delete(
-      `/api/ecommerce/v1/admin/product/${id}`
+      `https://mernstackecommerce-1.onrender.com/api/ecommerce/v1/admin/product/${id}`
     );
     dispatch(deleteProductSuccess(data.success));
   } catch (error) {
@@ -120,7 +125,7 @@ export const updateProduct = (id, productData) => async (dispatch) => {
     dispatch(updateProductRequest());
     const config = { headers: { "Content-Type": "multipart/form-data" } };
     const { data } = await axios.put(
-      `/api/ecommerce/v1/admin/product/${id}`,
+      `https://mernstackecommerce-1.onrender.com/api/ecommerce/v1/admin/product/${id}`,
       productData,
       config
     );
@@ -137,7 +142,7 @@ export const createNewReview = (reviewData) => async (dispatch) => {
       headers: { "Content-Type": "application/json" },
     };
     const { data } = await axios.put(
-      `/api/ecommerce/v1/review`,
+      `https://mernstackecommerce-1.onrender.com/api/ecommerce/v1/review`,
       reviewData,
       config
     );
@@ -157,7 +162,7 @@ export const getAllReviews = (productId) => async (dispatch) => {
   try {
     dispatch(getReviewsRequest());
     const { data } = await axios.get(
-      `/api/ecommerce/v1/reviews?id=${productId}`
+      `https://mernstackecommerce-1.onrender.com/api/ecommerce/v1/reviews?id=${productId}`
     );
 
     dispatch(getReviewsSuccess(data.reviews));
@@ -169,7 +174,7 @@ export const deleteReview = (reviewId, productId) => async (dispatch) => {
   try {
     dispatch(deleteReviewRequest());
     const { data } = await axios.delete(
-      `/api/ecommerce/v1/reviews?id=${reviewId}&productId=${productId}`
+      `https://mernstackecommerce-1.onrender.com/api/ecommerce/v1/reviews?id=${reviewId}&productId=${productId}`
     );
 
     dispatch(deleteReviewSuccess(data.success));

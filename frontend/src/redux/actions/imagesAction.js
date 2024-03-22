@@ -1,3 +1,4 @@
+import { BACKEND_URL, BACKEND_URL_PROD } from "../../constants";
 import {
   imageRequest,
   imageSuccess,
@@ -10,7 +11,9 @@ import axios from "axios";
 export const getImages = () => async (dispatch) => {
   try {
     dispatch(getImageRequest());
-    const { data } = await axios.get("/api/ecommerce/v1/background/images");
+    const { data } = await axios.get(
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/background/images`
+    );
     dispatch(getImageSuccess(data.images));
   } catch (error) {
     dispatch(getImageFail(error.response.data.message));
@@ -21,7 +24,7 @@ export const createImages = (imageData) => async (dispatch) => {
     dispatch(imageRequest());
     const config = { headers: { "Content-Type": "multipart/form-data" } };
     const { data } = await axios.post(
-      "/api/ecommerce/v1/admin/background/images/create/new",
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/background/images/create/new`,
       imageData,
       config
     );
