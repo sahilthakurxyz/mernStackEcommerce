@@ -148,7 +148,7 @@ const App = () => {
               path="/update/password"
               element={
                 <ProtectedRoute isAuthenticated={isAuthenticated}>
-                  <Route path="/update/password" element={<UpdatePassword />} />
+                  <UpdatePassword />
                 </ProtectedRoute>
               }
             />

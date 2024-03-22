@@ -81,16 +81,23 @@
     font-size: 14px;
     font-family: "Roboto","Arial",sans-serif;
     font-weight: 300;
-
+   align-items: center;
     transition: background-color 0.2s;
   }
-
+ 
+  
   .account-feature-container > div:hover {
     background-color: #f0f0f0;
   }
   
   /* Style for icons */
   .account-feature-container > div > svg {
+    width: 18px;
+    height: 18px;
+    margin-right: 15px; 
+    color: #333;
+  }
+  .account-feature-container > div > a > svg{
     width: 18px;
     height: 18px;
     margin-right: 15px; 

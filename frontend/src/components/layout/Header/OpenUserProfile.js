@@ -5,7 +5,8 @@ import { IoIosLogOut } from "react-icons/io";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../redux/actions/userAction";
 import { useAlert } from "react-alert";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
 const OpenUserProfile = ({ onClose, user, isAuthenticated }) => {
   const dispatch = useDispatch();
   const containerRef = useRef(null);
@@ -38,9 +39,13 @@ const OpenUserProfile = ({ onClose, user, isAuthenticated }) => {
       navigate("/login");
     }, 1000);
   };
+  const handleDashboard = () => {
+    onClose();
+    navigate("/admin/dashboard");
+  };
   const handleLogin = () => {
     if (isAuthenticated) {
-      navigate("/account");
+      alert.error("You,re already Logged In");
       onClose();
     } else {
       navigate("/login");
@@ -54,17 +59,19 @@ const OpenUserProfile = ({ onClose, user, isAuthenticated }) => {
           &#10006;
         </span>
         {isAuthenticated ? (
-          <div className={styles["user-container"]}>
-            {user && user.avatar && user.avatar.url ? (
-              <img src={user.avatar.url} alt="user-profile" />
-            ) : (
-              <img src={"userprofile.png"} alt="user-profile" />
-            )}
-            <div className={styles["user-details"]}>
-              <p>{user && user.name}</p>
-              <p>{user && user.email}</p>
+          <Link to="/account">
+            <div className={styles["user-container"]}>
+              {user && user.avatar && user.avatar.url ? (
+                <img src={user.avatar.url} alt="user-profile" />
+              ) : (
+                <img src={"userprofile.png"} alt="user-profile" />
+              )}
+              <div className={styles["user-details"]}>
+                <p>{user && user.name}</p>
+                <p>{user && user.email}</p>
+              </div>
             </div>
-          </div>
+          </Link>
         ) : (
           <div className={styles["user-container"]}>
             <img src={"userprofile.png"} alt="user-profile" />
@@ -83,6 +90,10 @@ const OpenUserProfile = ({ onClose, user, isAuthenticated }) => {
             <div onClick={handleLogOut}>
               <GoSignIn />
               <p>Sign out</p>
+            </div>
+            <div onClick={handleDashboard}>
+              <DashboardCustomizeIcon />
+              <p>Dashboard</p>
             </div>
           </div>
         </div>

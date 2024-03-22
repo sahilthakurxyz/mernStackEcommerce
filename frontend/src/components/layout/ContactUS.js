@@ -6,9 +6,11 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import { Typography } from "@mui/material";
+import ScreenVisual from "../../ScreenVisual";
 const ContactUS = () => {
   return (
     <div className={styles["contact-us"]}>
+      <ScreenVisual />
       <Typography>Contact Us </Typography>
       <div>
         <div className={styles["facebook"]}>

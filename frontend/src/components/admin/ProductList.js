@@ -8,6 +8,8 @@ import { Link, useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
+import ShopTwoIcon from "@mui/icons-material/ShopTwo";
+
 import Loader from "../layout/Loader";
 import {
   deleteProduct,
@@ -106,7 +108,15 @@ const ProductList = () => {
       dispatch(deleteProductReset());
     }
     dispatch(getAdminProduct());
-  }, [dispatch, alertError, deleteError, isDeleted, navigate, deleteLoading]);
+  }, [
+    dispatch,
+    alertError,
+    deleteError,
+    isDeleted,
+    navigate,
+    deleteLoading,
+    error,
+  ]);
   return (
     <Fragment>
       {loading ? (
@@ -129,16 +139,25 @@ const ProductList = () => {
             <Sidebar />
             <div>
               <Typography>All Products</Typography>
-              <div className="productList-data-container">
-                <DataGrid
-                  rows={rows}
-                  columns={columns}
-                  getRowId={(rows) => rows.id}
-                  pageSizeOptions={[10, 100]}
-                  disableRowSelectionOnClick
-                  className="productListTable"
-                />
-              </div>
+              {products.length > 0 ? (
+                <div className="productList-data-container">
+                  <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    getRowId={(rows) => rows.id}
+                    pageSizeOptions={[10, 100]}
+                    disableRowSelectionOnClick
+                    className="productListTable"
+                  />
+                </div>
+              ) : (
+                <div className="empty-bucket">
+                  <div>
+                    <ShopTwoIcon />
+                    <p>Your Order Container is Empty</p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </Fragment>

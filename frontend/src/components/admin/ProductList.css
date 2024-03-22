@@ -51,3 +51,20 @@
 .redColor{
     color: red;
 }
+.empty-bucket{
+    margin-top: 3vmax;
+    width: 30vw;
+    height: 30vh;
+
+}
+.empty-bucket > div{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.empty-bucket > div > svg{
+  font-size: 3rem;
+}
+.empty-bucket > div > p{
+    font: 500 2vmax "Roboto";
+}

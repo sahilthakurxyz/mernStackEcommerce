@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Loader from "../layout/Loader";
 import { useAlert } from "react-alert";
 import ScreenVisual from "../../ScreenVisual";
+import ShopTwoIcon from "@mui/icons-material/ShopTwo";
 import {
   adminOrdersClearError,
   deleteOrderClearError,
@@ -41,48 +42,51 @@ const OrderList = () => {
       return;
     }
   };
-  const columns = [
-    { field: "id", headersName: "Order Id", minWidth: 240 },
-    {
-      field: "status",
-      headersName: "Status",
-      minWidth: 200,
-      cellClassName: (params) => {
-        return params.row.status === "Delivered" ? greenColor : redColor;
+  let columns = [];
+  if (orders) {
+    columns = [
+      { field: "id", headersName: "Order Id", minWidth: 240 },
+      {
+        field: "status",
+        headersName: "Status",
+        minWidth: 200,
+        cellClassName: (params) => {
+          return params.row.status === "Delivered" ? greenColor : redColor;
+        },
       },
-    },
-    {
-      field: "itemQty",
-      headersName: "Items Qty",
-      minWidth: 200,
-      type: "number",
-    },
-    {
-      field: "amount",
-      headersName: "Amount",
-      minWidth: 200,
-      type: "number",
-    },
-    {
-      field: "actions",
-      HeadersName: "Actions",
-      type: "number",
-      minWidth: 200,
+      {
+        field: "itemQty",
+        headersName: "Items Qty",
+        minWidth: 200,
+        type: "number",
+      },
+      {
+        field: "amount",
+        headersName: "Amount",
+        minWidth: 200,
+        type: "number",
+      },
+      {
+        field: "actions",
+        HeadersName: "Actions",
+        type: "number",
+        minWidth: 200,
 
-      renderCell: (params) => {
-        return (
-          <Fragment>
-            <Link to={`/admin/update/order/${params.row.id}`}>
-              <EditIcon />
-            </Link>
-            <Button onClick={() => deleteOrderHandler(params.row.id)}>
-              <DeleteIcon />
-            </Button>
-          </Fragment>
-        );
+        renderCell: (params) => {
+          return (
+            <Fragment>
+              <Link to={`/admin/update/order/${params.row.id}`}>
+                <EditIcon />
+              </Link>
+              <Button onClick={() => deleteOrderHandler(params.row.id)}>
+                <DeleteIcon />
+              </Button>
+            </Fragment>
+          );
+        },
       },
-    },
-  ];
+    ];
+  }
   const rows = [];
   orders &&
     orders.forEach((item) => {
@@ -107,7 +111,15 @@ const OrderList = () => {
       dispatch(deleteOrderReset());
     }
     dispatch(adminOrders());
-  }, [dispatch, alertError, deleteError, isDeleted, navigate, deleteLoading]);
+  }, [
+    dispatch,
+    alertError,
+    deleteError,
+    isDeleted,
+    navigate,
+    deleteLoading,
+    error,
+  ]);
   return (
     <Fragment>
       {loading ? (
@@ -130,16 +142,25 @@ const OrderList = () => {
             <Sidebar />
             <div>
               <Typography>All Orders</Typography>
-              <div className="productList-data-container">
-                <DataGrid
-                  rows={rows}
-                  columns={columns}
-                  getRowId={(rows) => rows.id}
-                  pageSizeOptions={[10, 100]}
-                  disableRowSelectionOnClick
-                  className="productListTable"
-                />
-              </div>
+              {orders.length > 0 ? (
+                <div className="productList-data-container">
+                  <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    getRowId={(rows) => rows.id}
+                    pageSizeOptions={[10, 100]}
+                    disableRowSelectionOnClick
+                    className="productListTable"
+                  />
+                </div>
+              ) : (
+                <div className="empty-bucket">
+                  <div>
+                    <ShopTwoIcon />
+                    <p>Your Order Container is Empty</p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </Fragment>

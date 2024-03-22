@@ -261,7 +261,9 @@
 .redColor{
     color: red;
 }
-
+.blueColor{
+    color: blue;
+}
   @media screen and (max-width:600px){
     .confirm-order-container{
       display: flex;

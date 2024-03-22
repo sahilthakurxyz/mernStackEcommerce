@@ -29,18 +29,20 @@ const UpdateOrder = () => {
   const [status, setStatus] = useState("");
   const greenColor = styles["greenColor"];
   const redColor = styles["redColor"];
+  const blueColor = styles["blueColor"];
   const { order, loading, error } = useSelector((state) => state.orderDetails);
   const {
     error: updateError,
     loading: updateLoading,
     isUpdated,
   } = useSelector((state) => state.adminOrderUpdate);
-  const { shippingInfo, orderItems, user } = order;
+  // const { shippingInfo, orderItems, user } = order;
+  const { user = {} } = order || {};
+  // let address = "";
+  const shippingInfo = order?.shippingInfo;
+  const orderItems = order?.orderItems;
+  const address = `${shippingInfo?.address}, ${shippingInfo?.city}, ${shippingInfo?.state}, ${shippingInfo?.pinCode}, ${shippingInfo?.country}`;
 
-  let address = "";
-  if (shippingInfo) {
-    address = `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state}, ${shippingInfo.pinCode}, ${shippingInfo.country}`;
-  }
   const options = {
     year: "numeric",
     month: "long",
@@ -56,7 +58,7 @@ const UpdateOrder = () => {
     const date = new Date(order.paidAt);
     createProductTime = date.toLocaleString("en-IN", options);
   }
-  if (order && order.orderStatus === "Shipped") {
+  if (order?.orderStatus && order.orderStatus === "Shipped") {
     dispatch(removeAllFromCart());
   }
   useEffect(() => {
@@ -95,7 +97,7 @@ const UpdateOrder = () => {
             <div>
               <div className={styles["confirm-shipping-area"]}>
                 <Typography>Shipping Info</Typography>
-                {shippingInfo && (
+                {order && shippingInfo && (
                   <div className={styles["confirm-shipping-area-box"]}>
                     <div>
                       <p>Name:</p>
@@ -152,12 +154,16 @@ const UpdateOrder = () => {
                   <div>
                     <p
                       className={
-                        order.orderStatus && order.orderStatus === "Delivered"
+                        order?.orderStatus && order.orderStatus === "Delivered"
                           ? greenColor
+                          : redColor ||
+                            (order?.orderStatus &&
+                              order.orderStatus === "Shipped")
+                          ? blueColor
                           : redColor
                       }
                     >
-                      <span>{order.orderStatus}</span>
+                      {order?.orderStatus && <span>{order.orderStatus}</span>}
                     </p>
                   </div>
                 </div>
