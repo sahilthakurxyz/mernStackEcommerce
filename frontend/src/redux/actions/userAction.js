@@ -41,13 +41,14 @@ import {
   resetPasswordFail,
 } from "../reducers/ProfileReducer";
 import axios from "axios";
+import { BACKEND_URL_PROD } from "../../constants";
 // login User
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch(loginRequest());
     const config = { headers: { "Content-Type": "application/json" } };
     const { data } = await axios.post(
-      "/api/ecommerce/v1/loginuser",
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/loginuser`,
       { email, password },
       config
     );
@@ -63,7 +64,7 @@ export const register = (userData) => async (dispatch) => {
     dispatch(registerRequest());
     const config = { headers: { "Content-Type": "multipart/form-data" } };
     const { data } = await axios.post(
-      "/api/ecommerce/v1/register",
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/register`,
       userData,
       config
     );
@@ -77,7 +78,9 @@ export const loadUser = () => async (dispatch) => {
   try {
     dispatch(loadUserRequest());
 
-    const { data } = await axios.get("/api/ecommerce/v1/profile");
+    const { data } = await axios.get(
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/profile`
+    );
     dispatch(loadUserSuccess(data.user));
   } catch (error) {
     dispatch(loadUserFail(error.response.data.message));
@@ -86,7 +89,7 @@ export const loadUser = () => async (dispatch) => {
 // logout User
 export const logout = () => async (dispatch) => {
   try {
-    await axios.get("/api/ecommerce/v1/logoutuser");
+    await axios.get(`${BACKEND_URL_PROD}/api/ecommerce/v1/logoutuser`);
     dispatch(logoutSuccess());
   } catch (error) {
     dispatch(logoutFail(error.response.data.message));
@@ -99,7 +102,7 @@ export const updateProfile = (userData) => async (dispatch) => {
     dispatch(updateProfileRequest());
     const config = { headers: { "Content-Type": "multipart/form-data" } };
     const { data } = await axios.put(
-      "/api/ecommerce/v1/profile/update",
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/profile/update`,
       userData,
       config
     );
@@ -115,7 +118,7 @@ export const updatePassword = (passwords) => async (dispatch) => {
     dispatch(updatePasswordRequest());
     const config = { headers: { "Content-Type": "application/json" } };
     const { data } = await axios.put(
-      "/api/ecommerce/v1/password/update",
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/password/update`,
       passwords,
       config
     );
@@ -142,7 +145,7 @@ export const forgetPassword = (email) => async (dispatch) => {
     dispatch(forgetPasswordRequest());
     const config = { headers: { "Content-Type": "application/json" } };
     const { data } = await axios.post(
-      "/api/ecommerce/v1/password/forgot",
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/password/forgot`,
       email,
       config
     );
@@ -160,7 +163,7 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
     dispatch(resetPasswordRequest());
     const config = { headers: { "Content-Type": "application/json" } };
     const { data } = await axios.put(
-      `/api/ecommerce/v1/reset/password/${token}`,
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/reset/password/${token}`,
       passwords,
       config
     );
@@ -176,7 +179,9 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
 export const adminAllUsersAction = () => async (dispatch) => {
   try {
     dispatch(getAllUsersRequest());
-    const { data } = await axios.get("/api/ecommerce/v1/admin/users");
+    const { data } = await axios.get(
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/users`
+    );
     dispatch(getAllUsersSuccess(data.users));
   } catch (error) {
     dispatch(getAllUsersFail(error.response.data.message));
@@ -186,7 +191,9 @@ export const adminAllUsersAction = () => async (dispatch) => {
 export const getUserDetails = (id) => async (dispatch) => {
   try {
     dispatch(userDetailsRequest());
-    const { data } = await axios.get(`/api/ecommerce/v1/admin/user/${id}`);
+    const { data } = await axios.get(
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/user/${id}`
+    );
     dispatch(userDetailsSuccess(data.user));
   } catch (error) {
     dispatch(userDetailsFail(error.response.data.message));
@@ -198,7 +205,7 @@ export const updateUser = (id, userData) => async (dispatch) => {
     dispatch(updateUserRequest());
     const config = { headers: { "Content-Type": "application/json" } };
     const { data } = await axios.put(
-      `/api/ecommerce/v1/admin/user/${id}`,
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/user/${id}`,
       userData,
       config
     );
@@ -211,7 +218,9 @@ export const updateUser = (id, userData) => async (dispatch) => {
 export const deleteUser = (id) => async (dispatch) => {
   try {
     dispatch(deleteUserRequest());
-    const { data } = await axios.delete(`/api/ecommerce/v1/admin/user/${id}`);
+    const { data } = await axios.delete(
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/user/${id}`
+    );
     dispatch(deleteUserSuccess(data));
   } catch (error) {
     dispatch(deleteUserFail(error.response.data.message));

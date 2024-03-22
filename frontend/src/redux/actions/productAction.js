@@ -1,4 +1,4 @@
-import { BACKEND_URL, BACKEND_URL_PROD } from "../../constants";
+import { BACKEND_URL_PROD } from "../../constants";
 import {
   allProductRequest,
   allProductSuccess,
@@ -64,7 +64,7 @@ export const getAdminProduct = () => async (dispatch) => {
   try {
     dispatch(adminProductsRequest());
     const { data } = await axios.get(
-      `${BACKEND_URL}/api/ecommerce/v1/admin/products`
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/products`
     );
 
     dispatch(adminProductsSuccess(data.products));
@@ -80,7 +80,7 @@ export const getProductDetails = (id) => async (dispatch) => {
   try {
     dispatch(productDetailRequest());
     const { data } = await axios.get(
-      `${BACKEND_URL}/ecommerce/v1/product/${id}`
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/product/${id}`
     );
     dispatch(productDetailSuccess(data));
   } catch (error) {
@@ -96,7 +96,7 @@ export const createNewProduct = (productData) => async (dispatch) => {
     dispatch(newProductRequest());
     const config = { headers: { "Content-Type": "multipart/form-data" } };
     const { data } = await axios.post(
-      "https://mernstackecommerce-1.onrender.com/api/ecommerce/v1/admin/product/new",
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/product/new`,
       productData,
       config
     );
@@ -112,7 +112,7 @@ export const deleteProduct = (id) => async (dispatch) => {
     dispatch(deleteProductRequest());
 
     const { data } = await axios.delete(
-      `https://mernstackecommerce-1.onrender.com/api/ecommerce/v1/admin/product/${id}`
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/product/${id}`
     );
     dispatch(deleteProductSuccess(data.success));
   } catch (error) {
@@ -125,7 +125,7 @@ export const updateProduct = (id, productData) => async (dispatch) => {
     dispatch(updateProductRequest());
     const config = { headers: { "Content-Type": "multipart/form-data" } };
     const { data } = await axios.put(
-      `https://mernstackecommerce-1.onrender.com/api/ecommerce/v1/admin/product/${id}`,
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/product/${id}`,
       productData,
       config
     );
@@ -142,7 +142,7 @@ export const createNewReview = (reviewData) => async (dispatch) => {
       headers: { "Content-Type": "application/json" },
     };
     const { data } = await axios.put(
-      `https://mernstackecommerce-1.onrender.com/api/ecommerce/v1/review`,
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/review`,
       reviewData,
       config
     );
@@ -162,7 +162,7 @@ export const getAllReviews = (productId) => async (dispatch) => {
   try {
     dispatch(getReviewsRequest());
     const { data } = await axios.get(
-      `https://mernstackecommerce-1.onrender.com/api/ecommerce/v1/reviews?id=${productId}`
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/reviews?id=${productId}`
     );
 
     dispatch(getReviewsSuccess(data.reviews));
@@ -174,7 +174,7 @@ export const deleteReview = (reviewId, productId) => async (dispatch) => {
   try {
     dispatch(deleteReviewRequest());
     const { data } = await axios.delete(
-      `https://mernstackecommerce-1.onrender.com/api/ecommerce/v1/reviews?id=${reviewId}&productId=${productId}`
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/reviews?id=${reviewId}&productId=${productId}`
     );
 
     dispatch(deleteReviewSuccess(data.success));

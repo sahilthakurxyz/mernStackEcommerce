@@ -23,6 +23,7 @@ import {
   updateOrderFail,
   updateOrderRequest,
 } from "../reducers/orderReducer";
+import { BACKEND_URL_PROD } from "../../constants";
 
 //create new order
 export const createNewOrder = (order) => async (dispatch) => {
@@ -34,7 +35,7 @@ export const createNewOrder = (order) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      `/api/ecommerce/v1/order/new`,
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/order/new`,
       order,
       config
     );
@@ -50,7 +51,9 @@ export const clearError = () => (dispatch) => {
 export const myOrders = () => async (dispatch) => {
   try {
     dispatch(myOrdersRequest());
-    const { data } = await axios.get(`/api/ecommerce/v1/orders/me`);
+    const { data } = await axios.get(
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/orders/me`
+    );
     dispatch(myOrdersSuccess(data.orders));
   } catch (error) {
     dispatch(myOrdersFail(error.response.data.message));
@@ -63,7 +66,9 @@ export const clearError2 = () => (dispatch) => {
 export const getOrderDetails = (id) => async (dispatch) => {
   try {
     dispatch(orderDetailsRequest());
-    const { data } = await axios.get(`/api/ecommerce/v1/order/${id}`);
+    const { data } = await axios.get(
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/order/${id}`
+    );
     dispatch(orderDetailssSuccess(data.order));
   } catch (error) {
     dispatch(orderDetailsFail(error.response.data.message));
@@ -77,7 +82,9 @@ export const clearError3 = () => (dispatch) => {
 export const adminOrders = () => async (dispatch) => {
   try {
     dispatch(adminAllOrdersRequest());
-    const { data } = await axios.get("/api/ecommerce/v1/admin/orders");
+    const { data } = await axios.get(
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/orders`
+    );
     dispatch(adminAllOrdersSuccess(data.orders));
   } catch (error) {
     dispatch(adminAllOrdersFail(error.response.data.message));
@@ -92,7 +99,9 @@ export const adminOrdersClear = () => (dispatch) => {
 export const deleteOrder = (id) => async (dispatch) => {
   try {
     dispatch(deleteOrderRequest());
-    const { data } = await axios.delete(`/api/ecommerce/v1/admin/order/${id}`);
+    const { data } = await axios.delete(
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/order/${id}`
+    );
     dispatch(deleteOrderSuccess(data.success));
   } catch (error) {
     dispatch(deleteOrderFail(error.response.data.message));
@@ -108,7 +117,7 @@ export const updateOrder = (id, productData) => async (dispatch) => {
       },
     };
     const { data } = await axios.put(
-      `/api/ecommerce/v1/admin/order/${id}`,
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/order/${id}`,
       productData,
       config
     );

@@ -4,10 +4,13 @@ import {
   removeFromCart,
   shippingInfo,
 } from "../reducers/cartReducer";
+import { BACKEND_URL_PROD } from "../../constants";
 
 export const addItemsCart = (id, quantity) => async (dispatch, getState) => {
   try {
-    const { data } = await axios.get(`/api/ecommerce/v1/product/${id}`);
+    const { data } = await axios.get(
+      `${BACKEND_URL_PROD}/api/ecommerce/v1/product/${id}`
+    );
     const product = data.product;
     const { price, discount } = product;
     const discountedPrice =

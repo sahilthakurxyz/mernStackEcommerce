@@ -43,12 +43,15 @@ import UserList from "./components/admin/UserList";
 import ProductReviews from "./components/admin/ProductReviews";
 import NotFound from "./components/layout/NotFound";
 import CreateImages from "./components/admin/CreateImages.js";
+import { BACKEND_URL_PROD } from "./constants.js";
 const App = () => {
   const dispatch = useDispatch();
   const [stripeApiKey, setStripeApiKey] = useState("");
   const getStripeApiKey = async () => {
     try {
-      const { data } = await axios.get("/api/ecommerce/v1/stripeApiKey");
+      const { data } = await axios.get(
+        `${BACKEND_URL_PROD}/api/ecommerce/v1/stripeApiKey`
+      );
       setStripeApiKey(data.stripeKey);
     } catch (error) {
       if (error.response.status === 401) {
