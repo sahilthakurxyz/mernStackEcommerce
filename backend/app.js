@@ -15,16 +15,17 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
   require("dotenv").config({ path: "backend/config/.env" });
 }
 const corsOptions = {
-  origin: "https://6602f9518617a754426d01d3--zippy-bunny-9be2ad.netlify.app",
-  methods: "GET,PUT,POST,DELETE",
+  origin: process.env.FRONTEND_URL, // Replace with the actual origin of your frontend
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 204,
 };
-app.use(cors(corsOptions));
+
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors(corsOptions));
 app.use(
   fileUpload({
     useTempFiles: true,
