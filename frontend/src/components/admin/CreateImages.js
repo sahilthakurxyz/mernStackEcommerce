@@ -78,7 +78,11 @@ const CreateImages = () => {
                     multiple
                   />
                 </div>
-                <button className={styles["create-productBtn"]} type="submit">
+                <button
+                  className={styles["create-productBtn"]}
+                  type="submit"
+                  disabled={imagesPreview.length > 0 ? false : true}
+                >
                   Create
                 </button>
               </form>

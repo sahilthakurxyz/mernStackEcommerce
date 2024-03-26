@@ -23,9 +23,6 @@ const ResetPassword = () => {
   const { loading, error, success } = useSelector(
     (state) => state.forgetPassword
   );
-  // const { user } = useSelector(
-  //   (state) => state.user
-  // );
   useEffect(() => {
     if (error) {
       alert.error(error);
@@ -33,9 +30,10 @@ const ResetPassword = () => {
     }
     if (success) {
       alert.success("Password Update Successfully");
-      navigate("/account");
+      dispatch(clearError());
+      navigate("/login");
     }
-  }, [error, alert, success, navigate]);
+  }, [error, alert, success, navigate, dispatch]);
   const handleResetPasswordSubmit = (e) => {
     e.preventDefault();
     const myForm = new FormData();

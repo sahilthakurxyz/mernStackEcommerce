@@ -47,7 +47,7 @@ const Banner = () => {
         <div
           className={styles.image}
           style={{
-            backgroundImage: `url(${images[currImageIndex].url})`,
+            backgroundImage: `url(${images && images[currImageIndex].url})`,
           }}
         >
           <div className={styles["left"]} onClick={handlePrevImage}>

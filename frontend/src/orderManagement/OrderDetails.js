@@ -11,6 +11,7 @@ import { useParams } from "react-router-dom";
 import { getOrderDetails } from "../redux/actions/orderAction";
 import Loader from "../components/layout/Loader";
 import { useAlert } from "react-alert";
+import { clearErrors3 } from "../redux/reducers/orderReducer";
 const OrderDetails = () => {
   const greenColor = styles["greenColor"];
   const redColor = styles["redColor"];
@@ -19,14 +20,16 @@ const OrderDetails = () => {
   const alert = useAlert();
   const { user } = useSelector((state) => state.user);
   const { order, loading, error } = useSelector((state) => state.orderDetails);
-  const { shippingInfo, orderItems } = order;
+
+  const { shippingInfo, orderItems } = order ? order : {};
   let address = "";
   if (shippingInfo) {
-    address = `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state}, ${shippingInfo.pinCode}, ${shippingInfo.country}`;
+    address = `${shippingInfo?.address}, ${shippingInfo?.city}, ${shippingInfo?.state}, ${shippingInfo?.pinCode}, ${shippingInfo?.country}`;
   }
   useEffect(() => {
     if (error) {
       alert.error(error);
+      dispatch(clearErrors3());
     }
     dispatch(getOrderDetails(id));
   }, [dispatch, alert, error, id]);
@@ -48,11 +51,11 @@ const OrderDetails = () => {
                   <div className={styles["orderDetails-shipping-area-box"]}>
                     <div>
                       <p>Name:</p>
-                      <span>{user.name}</span>
+                      <span>{user?.name}</span>
                     </div>
                     <div>
                       <p>Phone:</p>
-                      <span>{shippingInfo.phoneNo}</span>
+                      <span>{shippingInfo?.phoneNo}</span>
                     </div>
                     <div>
                       <p>Address:</p>
@@ -65,7 +68,7 @@ const OrderDetails = () => {
               <div className={styles["orderDetails-shipping-area"]}>
                 <Typography>Payment Info</Typography>
                 <div className={styles["orderDetails-shipping-area-box"]}>
-                  {order && order.paymentInfo && (
+                  {order?.paymentInfo && (
                     <div>
                       <p
                         className={
@@ -126,9 +129,9 @@ const OrderDetails = () => {
                 <Typography>Order Status</Typography>
                 <div>
                   <p>
-                    {order && order.orderStatus === "Processing"
+                    {order && order?.orderStatus === "Processing"
                       ? "Processing..."
-                      : order.orderStatus}
+                      : order?.orderStatus}
                   </p>
                 </div>
               </div>

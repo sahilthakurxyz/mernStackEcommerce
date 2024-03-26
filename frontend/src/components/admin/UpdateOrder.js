@@ -101,11 +101,11 @@ const UpdateOrder = () => {
                   <div className={styles["confirm-shipping-area-box"]}>
                     <div>
                       <p>Name:</p>
-                      <span>{user.name}</span>
+                      <span>{user?.name}</span>
                     </div>
                     <div>
                       <p>Phone:</p>
-                      <span>{shippingInfo.phoneNo}</span>
+                      <span>{shippingInfo?.phoneNo}</span>
                     </div>
                     <div>
                       <p>Address:</p>
@@ -117,16 +117,16 @@ const UpdateOrder = () => {
               <div className={styles["orderDetails-shipping-area"]}>
                 <Typography>Payment Info</Typography>
                 <div className={styles["orderDetails-shipping-area-box"]}>
-                  {order && order.paymentInfo && (
+                  {order && order?.paymentInfo && (
                     <div>
                       <p
                         className={
-                          order.paymentInfo.status === "succeeded"
+                          order.paymentInfo?.status === "succeeded"
                             ? greenColor
                             : redColor
                         }
                       >
-                        {order.paymentInfo.status === "succeeded"
+                        {order.paymentInfo?.status === "succeeded"
                           ? "PAID"
                           : "NOT PAID YET"}
                       </p>
@@ -141,8 +141,8 @@ const UpdateOrder = () => {
                       <p>Amount:</p>
 
                       <span>
-                        included Tax ({order.taxPrice.toFixed(0)}):{" "}
-                        {order.totalPrice && order.totalPrice.toFixed(2)}
+                        included Tax ({order?.taxPrice.toFixed(0)}):{" "}
+                        {order.totalPrice && order?.totalPrice.toFixed(2)}
                       </span>
                     </div>
                   )}

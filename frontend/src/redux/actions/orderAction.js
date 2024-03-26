@@ -1,4 +1,3 @@
-import axios from "axios";
 import {
   createOrderRequest,
   createOrderSuccess,
@@ -23,25 +22,20 @@ import {
   updateOrderFail,
   updateOrderRequest,
 } from "../reducers/orderReducer";
-import { BACKEND_URL_PROD } from "../../constants";
+import { attachTokenToRequests, axiosInstance } from "../../constants";
 
 //create new order
 export const createNewOrder = (order) => async (dispatch) => {
   try {
+    attachTokenToRequests();
     dispatch(createOrderRequest());
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    const { data } = await axios.post(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/order/new`,
-      order,
-      config
+    const { data } = await axiosInstance.post(
+      `/api/ecommerce/v1/order/new`,
+      order
     );
-    dispatch(createOrderSuccess(data));
+    dispatch(createOrderSuccess(data && data));
   } catch (error) {
-    dispatch(createOrderFail(error.response.data.message));
+    dispatch(createOrderFail(error.response?.data.message));
   }
 };
 export const clearError = () => (dispatch) => {
@@ -50,13 +44,12 @@ export const clearError = () => (dispatch) => {
 // get All orders
 export const myOrders = () => async (dispatch) => {
   try {
+    attachTokenToRequests();
     dispatch(myOrdersRequest());
-    const { data } = await axios.get(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/orders/me`
-    );
-    dispatch(myOrdersSuccess(data.orders));
+    const { data } = await axiosInstance.get(`/api/ecommerce/v1/orders/me`);
+    dispatch(myOrdersSuccess(data?.orders));
   } catch (error) {
-    dispatch(myOrdersFail(error.response.data.message));
+    dispatch(myOrdersFail(error.response?.data.message));
   }
 };
 export const clearError2 = () => (dispatch) => {
@@ -66,12 +59,10 @@ export const clearError2 = () => (dispatch) => {
 export const getOrderDetails = (id) => async (dispatch) => {
   try {
     dispatch(orderDetailsRequest());
-    const { data } = await axios.get(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/order/${id}`
-    );
-    dispatch(orderDetailssSuccess(data.order));
+    const { data } = await axiosInstance.get(`/api/ecommerce/v1/order/${id}`);
+    dispatch(orderDetailssSuccess(data?.order));
   } catch (error) {
-    dispatch(orderDetailsFail(error.response.data.message));
+    dispatch(orderDetailsFail(error.response?.data.message));
   }
 };
 
@@ -82,12 +73,10 @@ export const clearError3 = () => (dispatch) => {
 export const adminOrders = () => async (dispatch) => {
   try {
     dispatch(adminAllOrdersRequest());
-    const { data } = await axios.get(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/orders`
-    );
-    dispatch(adminAllOrdersSuccess(data.orders));
+    const { data } = await axiosInstance.get(`/api/ecommerce/v1/admin/orders`);
+    dispatch(adminAllOrdersSuccess(data?.orders));
   } catch (error) {
-    dispatch(adminAllOrdersFail(error.response.data.message));
+    dispatch(adminAllOrdersFail(error.response?.data.message));
   }
 };
 
@@ -99,31 +88,25 @@ export const adminOrdersClear = () => (dispatch) => {
 export const deleteOrder = (id) => async (dispatch) => {
   try {
     dispatch(deleteOrderRequest());
-    const { data } = await axios.delete(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/order/${id}`
+    const { data } = await axiosInstance.delete(
+      `/api/ecommerce/v1/admin/order/${id}`
     );
-    dispatch(deleteOrderSuccess(data.success));
+    dispatch(deleteOrderSuccess(data?.success));
   } catch (error) {
-    dispatch(deleteOrderFail(error.response.data.message));
+    dispatch(deleteOrderFail(error.response?.data.message));
   }
 };
 // Update the Order Status
 export const updateOrder = (id, productData) => async (dispatch) => {
   try {
     dispatch(updateOrderRequest());
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    const { data } = await axios.put(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/order/${id}`,
-      productData,
-      config
+    const { data } = await axiosInstance.put(
+      `/api/ecommerce/v1/admin/order/${id}`,
+      productData
     );
-    dispatch(updateOrderSuccess(data.success));
+    dispatch(updateOrderSuccess(data?.success));
   } catch (error) {
-    dispatch(updateOrderFail(error.response.data.message));
+    dispatch(updateOrderFail(error.response?.data.message));
   }
 };
 // Update the Order Only Admin can Access

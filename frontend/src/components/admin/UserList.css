@@ -51,3 +51,14 @@ padding: 1vmax 2vmax;
 .redColor{
    color: red;
 }
+.empty-bucket > div{
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+}
+.empty-bucket > div > svg{
+ font-size: 3rem;
+}
+.empty-bucket > div > p{
+   font: 500 2vmax "Roboto";
+}

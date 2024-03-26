@@ -14,7 +14,7 @@ const genericResetReducer = (state) => {
   state.isUpdated = false;
 };
 const profileSlice = createSlice({
-  name: "update profile",
+  name: "update user profile & Password",
   initialState: {
     isUpdated: false,
     loading: false,
@@ -37,7 +37,6 @@ const profileSlice = createSlice({
 //  Forgot & Reset Password Reducers
 const genericForgetPasswordRequest = (state) => {
   state.loading = true;
-  state.error = null;
 };
 const genericForgetPasswordFail = (state, action) => {
   state.loading = false;

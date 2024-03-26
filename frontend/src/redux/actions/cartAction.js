@@ -1,16 +1,14 @@
-import axios from "axios";
 import {
   addToCart,
   removeFromCart,
   shippingInfo,
 } from "../reducers/cartReducer";
-import { BACKEND_URL_PROD } from "../../constants";
+import { attachTokenToRequests, axiosInstance } from "../../constants";
 
 export const addItemsCart = (id, quantity) => async (dispatch, getState) => {
   try {
-    const { data } = await axios.get(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/product/${id}`
-    );
+    attachTokenToRequests();
+    const { data } = await axiosInstance.get(`/api/ecommerce/v1/product/${id}`);
     const product = data.product;
     const { price, discount } = product;
     const discountedPrice =
@@ -38,6 +36,7 @@ export const addItemsCart = (id, quantity) => async (dispatch, getState) => {
     console.log("An Error for Add to Cart", error);
   }
 };
+
 export const removeItemFromCart = (id) => async (dispatch, getState) => {
   dispatch(
     removeFromCart({

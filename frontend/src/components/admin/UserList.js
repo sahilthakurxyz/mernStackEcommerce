@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Loader from "../layout/Loader";
 import { useAlert } from "react-alert";
 import ScreenVisual from "../../ScreenVisual";
+import ShopTwoIcon from "@mui/icons-material/ShopTwo";
+
 import {
   adminAllUsersAction,
   deleteUser,
@@ -120,8 +122,10 @@ const UserList = () => {
       alert.success(message);
       dispatch(deleteUserReset());
     }
-    dispatch(adminAllUsersAction());
   }, [dispatch, alert, error, deleteError, isDeleted, message, userError]);
+  useEffect(() => {
+    dispatch(adminAllUsersAction());
+  }, [dispatch]);
   return (
     <Fragment>
       {loading ? (
@@ -144,16 +148,25 @@ const UserList = () => {
             <Sidebar />
             <div>
               <Typography>All Users</Typography>
-              <div className="productList-data-container">
-                <DataGrid
-                  rows={rows}
-                  columns={columns}
-                  getRowId={(rows) => rows.id}
-                  pageSizeOptions={[10, 100]}
-                  disableRowSelectionOnClick
-                  className="productListTable"
-                />
-              </div>
+              {users.length > 0 ? (
+                <div className="productList-data-container">
+                  <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    getRowId={(rows) => rows.id}
+                    pageSizeOptions={[10, 100]}
+                    disableRowSelectionOnClick
+                    className="productListTable"
+                  />
+                </div>
+              ) : (
+                <div className="empty-bucket">
+                  <div>
+                    <ShopTwoIcon />
+                    <p>Your Order Container is Empty</p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </Fragment>

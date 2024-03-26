@@ -73,10 +73,10 @@ exports.forgotPassword = handleAsyncOperation(async (req, res, next) => {
     return next(new ErrorHandler("user not found", 404));
   }
   const resetToken = await user.generateResetPassword();
-  // await user.save({ validateBeoreSave: false });
-  // // const resetPasswordUrl = `http://${req.get(
-  // //   "host"
-  // // )}/api/ecommerce/v1/password-reset/${resetToken}`;
+  await user.save({ validateBeoreSave: false });
+  // const resetPasswordUrl = `http://${req.get(
+  //   "host"
+  // )}/api/ecommerce/v1/password-reset/${resetToken}`;
   // const resetPasswordUrl = `${process.env.FRONTEND_URL}/reset/password/${resetToken}`;
   // const message = `your reset password token is :- \n\n ${resetPasswordUrl} \n\n if you have not requested this email then, please ignore this `;
 

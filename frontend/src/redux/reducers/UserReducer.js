@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+const initialState = {
+  loading: false,
+  user: {},
+  error: null,
+  isAuthenticated: false, // Check if user is authenticated
+};
 const userSlice = createSlice({
-  name: "user info",
-  initialState: {
-    loading: false,
-    user: {},
-    error: null,
-    isAuthenticated: false,
-  },
+  name: "user",
+  initialState,
   reducers: {
     registerRequest: (state) => {
       state.loading = true;

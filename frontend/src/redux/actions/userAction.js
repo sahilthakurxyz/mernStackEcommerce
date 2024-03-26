@@ -40,92 +40,106 @@ import {
   resetPasswordSuccess,
   resetPasswordFail,
 } from "../reducers/ProfileReducer";
-import axios from "axios";
-import { BACKEND_URL_PROD } from "../../constants";
+import {
+  attachTokenToRequests,
+  axiosInstance,
+  removeToken,
+} from "../../constants";
 // login User
 export const login = (email, password) => async (dispatch) => {
   try {
+    attachTokenToRequests();
     dispatch(loginRequest());
-    const config = { headers: { "Content-Type": "application/json" } };
-    const { data } = await axios.post(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/loginuser`,
-      { email, password },
-      config
-    );
-    dispatch(loginSuccess(data.user));
+
+    const response = await axiosInstance.post(`/api/ecommerce/v1/loginuser`, {
+      email,
+      password,
+    });
+    const token = response.data?.token;
+    localStorage.setItem("token", token);
+    localStorage.setItem("auth", response.data?.auth);
+    dispatch(loginSuccess(response.data?.user));
   } catch (error) {
-    dispatch(loginFail(error.response.data.message));
+    // Dispatch the fail action with the error message
+    dispatch(loginFail(error.response?.data.message));
   }
 };
 // Register the user
 
 export const register = (userData) => async (dispatch) => {
   try {
+    attachTokenToRequests();
     dispatch(registerRequest());
-    const config = { headers: { "Content-Type": "multipart/form-data" } };
-    const { data } = await axios.post(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/register`,
-      userData,
-      config
+
+    const { data } = await axiosInstance.post(
+      `/api/ecommerce/v1/register`,
+      userData
     );
-    dispatch(registerSuccess(data.user));
+    const token = data?.token;
+    localStorage.setItem("token", token);
+    localStorage.setItem("auth", data?.auth);
+    dispatch(registerSuccess(data?.user));
   } catch (error) {
-    dispatch(registerFail(error.response.data.message));
+    dispatch(registerFail(error.response?.data.message));
   }
 };
 // get user if user is login
 export const loadUser = () => async (dispatch) => {
   try {
+    attachTokenToRequests();
     dispatch(loadUserRequest());
+    const { data } = await axiosInstance.get(`/api/ecommerce/v1/profile`);
 
-    const { data } = await axios.get(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/profile`
-    );
-    dispatch(loadUserSuccess(data.user));
+    dispatch(loadUserSuccess(data?.user));
   } catch (error) {
-    dispatch(loadUserFail(error.response.data.message));
+    dispatch(loadUserFail(error.response?.data.message));
   }
 };
 // logout User
 export const logout = () => async (dispatch) => {
   try {
-    await axios.get(`${BACKEND_URL_PROD}/api/ecommerce/v1/logoutuser`);
+    await axiosInstance.get(`/api/ecommerce/v1/logoutuser`);
+
+    // Remove token from localStorage
+
+    // Clear AxiosInstance authorization header
+    // Remove token
+    removeToken();
     dispatch(logoutSuccess());
   } catch (error) {
-    dispatch(logoutFail(error.response.data.message));
+    dispatch(logoutFail(error.response?.data.message));
   }
 };
 
 // Update Profile
 export const updateProfile = (userData) => async (dispatch) => {
   try {
+    attachTokenToRequests();
     dispatch(updateProfileRequest());
-    const config = { headers: { "Content-Type": "multipart/form-data" } };
-    const { data } = await axios.put(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/profile/update`,
-      userData,
-      config
+    const { data } = await axiosInstance.put(
+      `/api/ecommerce/v1/profile/update`,
+      userData
     );
 
-    dispatch(updateProfileSuccess(data.success));
+    dispatch(updateProfileSuccess(data?.success));
   } catch (error) {
-    dispatch(updateProfileFail(error.response.data.message));
+    dispatch(updateProfileFail(error.response?.data.message));
   }
 };
 // Update Password
 export const updatePassword = (passwords) => async (dispatch) => {
   try {
+    attachTokenToRequests();
     dispatch(updatePasswordRequest());
-    const config = { headers: { "Content-Type": "application/json" } };
-    const { data } = await axios.put(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/password/update`,
-      passwords,
-      config
-    );
 
-    dispatch(updatePasswordSuccess(data.success));
+    const { data } = await axiosInstance.put(
+      `/api/ecommerce/v1/password/update`,
+      passwords
+    );
+    localStorage.setItem("token", data?.token);
+    dispatch(updatePasswordSuccess(data?.success));
   } catch (error) {
-    dispatch(updatePasswordFail(error.response.data.message));
+    dispatch(updatePasswordFail(error.response?.data.message));
   }
 };
 // Clear Error for Update
@@ -142,17 +156,17 @@ export const clearError = () => async (dispatch) => {
 export const forgetPassword = (email) => async (dispatch) => {
   // console.log("FormData Entries:", Array.from(email.entries()));
   try {
+    attachTokenToRequests();
     dispatch(forgetPasswordRequest());
-    const config = { headers: { "Content-Type": "application/json" } };
-    const { data } = await axios.post(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/password/forgot`,
-      email,
-      config
+
+    const { data } = await axiosInstance.post(
+      `/api/ecommerce/v1/password/forgot`,
+      email
     );
 
-    dispatch(forgetPasswordSuccess(data.message));
+    dispatch(forgetPasswordSuccess(data?.message));
   } catch (error) {
-    dispatch(forgetPasswordFail(error.response.data.message));
+    dispatch(forgetPasswordFail(error.response?.data.message));
   }
 };
 
@@ -160,17 +174,15 @@ export const forgetPassword = (email) => async (dispatch) => {
 export const resetPassword = (token, passwords) => async (dispatch) => {
   // console.log("FormData Entries:", Array.from(passwords.entries()));
   try {
+    attachTokenToRequests();
     dispatch(resetPasswordRequest());
-    const config = { headers: { "Content-Type": "application/json" } };
-    const { data } = await axios.put(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/reset/password/${token}`,
-      passwords,
-      config
+    const { data } = await axiosInstance.put(
+      `/api/ecommerce/v1/reset/password/${token}`,
+      passwords
     );
-
-    dispatch(resetPasswordSuccess(data.success));
+    dispatch(resetPasswordSuccess(data?.success));
   } catch (error) {
-    dispatch(resetPasswordFail(error.response.data.message));
+    dispatch(resetPasswordFail(error.response?.data.message));
   }
 };
 
@@ -178,51 +190,52 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
 
 export const adminAllUsersAction = () => async (dispatch) => {
   try {
+    attachTokenToRequests();
     dispatch(getAllUsersRequest());
-    const { data } = await axios.get(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/users`
-    );
-    dispatch(getAllUsersSuccess(data.users));
+    const { data } = await axiosInstance.get(`/api/ecommerce/v1/admin/users`);
+    dispatch(getAllUsersSuccess(data?.users));
   } catch (error) {
-    dispatch(getAllUsersFail(error.response.data.message));
+    dispatch(getAllUsersFail(error.response?.data.message));
   }
 };
 // get User Details Only Admin Can Acess
 export const getUserDetails = (id) => async (dispatch) => {
   try {
+    attachTokenToRequests();
     dispatch(userDetailsRequest());
-    const { data } = await axios.get(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/user/${id}`
+    const { data } = await axiosInstance.get(
+      `/api/ecommerce/v1/admin/user/${id}`
     );
-    dispatch(userDetailsSuccess(data.user));
+    dispatch(userDetailsSuccess(data?.user));
   } catch (error) {
-    dispatch(userDetailsFail(error.response.data.message));
+    dispatch(userDetailsFail(error.response?.data.message));
   }
 };
 // Update User Only Admin can Access
 export const updateUser = (id, userData) => async (dispatch) => {
   try {
+    attachTokenToRequests();
     dispatch(updateUserRequest());
-    const config = { headers: { "Content-Type": "application/json" } };
-    const { data } = await axios.put(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/user/${id}`,
-      userData,
-      config
+
+    const { data } = await axiosInstance.put(
+      `/api/ecommerce/v1/admin/user/${id}`,
+      userData
     );
-    dispatch(updateUserSuccess(data));
+    dispatch(updateUserSuccess(data && data));
   } catch (error) {
-    dispatch(updateUserFail(error.response.data.message));
+    dispatch(updateUserFail(error.response?.data.message));
   }
 };
 // Delete User  Only Admin Can Access
 export const deleteUser = (id) => async (dispatch) => {
   try {
+    attachTokenToRequests();
     dispatch(deleteUserRequest());
-    const { data } = await axios.delete(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/user/${id}`
+    const { data } = await axiosInstance.delete(
+      `/api/ecommerce/v1/admin/user/${id}`
     );
-    dispatch(deleteUserSuccess(data));
+    dispatch(deleteUserSuccess(data && data));
   } catch (error) {
-    dispatch(deleteUserFail(error.response.data.message));
+    dispatch(deleteUserFail(error.response?.data.message));
   }
 };

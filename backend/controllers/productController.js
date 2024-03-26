@@ -250,7 +250,6 @@ exports.getBackgroundImages = handleAsyncOperation(async (req, res) => {
 // Create Images for background only for Once Admin Can Access
 exports.backgroundImages = handleAsyncOperation(async (req, res, next) => {
   let images = [];
-  console.log(req.body, "req.body");
   if (typeof req.body.images === "string") {
     images.push(req.body.images);
   } else {

@@ -21,6 +21,7 @@ import { useAlert } from "react-alert";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { clearError, createNewOrder } from "../redux/actions/orderAction";
+import { attachTokenToRequests, axiosInstance } from "../constants.js";
 
 const Payment = () => {
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
@@ -50,15 +51,10 @@ const Payment = () => {
 
     payBtn.current.disabled = true;
     try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      const { data } = await axios.post(
+      attachTokenToRequests();
+      const { data } = await axiosInstance.post(
         "/api/ecommerce/v1/payment/process",
-        paymentData,
-        config
+        paymentData
       );
       const client_secret = data.client_secret;
       if (!stripe || !elements) return;
@@ -130,6 +126,11 @@ const Payment = () => {
               </p>
               <p className={styles["guidelines-text"]}>
                 Contact customer support for any assistance or queries.
+              </p>
+              <p>
+                <a href="https://docs.stripe.com/testing#regulatory-cards">
+                  This Link for Payment details
+                </a>
               </p>
             </div>
             <button

@@ -25,7 +25,6 @@ import ConfrimOrder from "./cartManagement/ConfrimOrder";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import Payment from "./cartManagement/Payment";
-import axios from "axios";
 import OrderSuccess from "./cartManagement/OrderSuccess";
 import PaymentFailed from "./cartManagement/PaymentFailed";
 import MyOrders from "./orderManagement/MyOrders";
@@ -43,18 +42,19 @@ import UserList from "./components/admin/UserList";
 import ProductReviews from "./components/admin/ProductReviews";
 import NotFound from "./components/layout/NotFound";
 import CreateImages from "./components/admin/CreateImages.js";
-import { BACKEND_URL_PROD } from "./constants.js";
+import { attachTokenToRequests, axiosInstance } from "./constants.js";
 const App = () => {
   const dispatch = useDispatch();
   const [stripeApiKey, setStripeApiKey] = useState("");
   const getStripeApiKey = async () => {
+    attachTokenToRequests();
     try {
-      const { data } = await axios.get(
-        `${BACKEND_URL_PROD}/api/ecommerce/v1/stripeApiKey`
+      const { data } = await axiosInstance.get(
+        `/api/ecommerce/v1/stripeApiKey`
       );
-      setStripeApiKey(data.stripeKey);
+      setStripeApiKey(data?.stripeKey);
     } catch (error) {
-      if (error.response.status === 401) {
+      if (error.response && error.response.status === 401) {
         // Handle unauthorized access error
         // Optionally, redirect the user to the login page or display an error message
       } else {
@@ -64,7 +64,8 @@ const App = () => {
       }
     }
   };
-  const { user, isAuthenticated, loading } = useSelector((state) => state.user);
+
+  const { user, auth, loading } = useSelector((state) => state.user);
   useEffect(() => {
     dispatch(loadUser());
     getStripeApiKey();
@@ -142,7 +143,7 @@ const App = () => {
             <Route
               path="/update/profile"
               element={
-                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <ProtectedRoute auth={auth}>
                   <Route path="/update/profile" element={<ProfileUpdate />} />
                 </ProtectedRoute>
               }
@@ -150,7 +151,7 @@ const App = () => {
             <Route
               path="/update/password"
               element={
-                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <ProtectedRoute auth={auth}>
                   <UpdatePassword />
                 </ProtectedRoute>
               }
@@ -158,7 +159,7 @@ const App = () => {
             <Route
               path="/process/payment"
               element={
-                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <ProtectedRoute auth={auth}>
                   {stripeApiKey && (
                     <Elements stripe={loadStripe(stripeApiKey)}>
                       <Payment />
@@ -170,7 +171,7 @@ const App = () => {
             <Route
               path="/account"
               element={
-                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <ProtectedRoute auth={auth}>
                   <MainLayout>
                     <Profile />
                   </MainLayout>
@@ -180,7 +181,7 @@ const App = () => {
             <Route
               path="/shipping"
               element={
-                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <ProtectedRoute auth={auth}>
                   <Header /> <Shipping />
                 </ProtectedRoute>
               }
@@ -188,7 +189,7 @@ const App = () => {
             <Route
               path="/order/confirm"
               element={
-                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <ProtectedRoute auth={auth}>
                   <Header /> <ConfrimOrder />
                 </ProtectedRoute>
               }
@@ -196,7 +197,7 @@ const App = () => {
             <Route
               path="/success"
               element={
-                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <ProtectedRoute auth={auth}>
                   <Header />
                   <OrderSuccess />
                 </ProtectedRoute>
@@ -205,7 +206,7 @@ const App = () => {
             <Route
               path="/payment/failed"
               element={
-                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <ProtectedRoute auth={auth}>
                   <Header />
                   <PaymentFailed />
                 </ProtectedRoute>
@@ -214,7 +215,7 @@ const App = () => {
             <Route
               path="/orders"
               element={
-                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <ProtectedRoute auth={auth}>
                   <Header />
                   <MyOrders />
                   <Footer />
@@ -224,7 +225,7 @@ const App = () => {
             <Route
               path="/orders/:id"
               element={
-                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <ProtectedRoute auth={auth}>
                   <Header />
                   <OrderDetails />
                 </ProtectedRoute>
@@ -237,7 +238,7 @@ const App = () => {
                   path="/admin/dashboard"
                   element={
                     <ProtectedRoute
-                      isAuthenticated={isAuthenticated}
+                      auth={auth}
                       isAdmin={user.role === "admin" ? true : false}
                       adminRoute={true}
                     >
@@ -252,7 +253,7 @@ const App = () => {
                   path="/admin/products"
                   element={
                     <ProtectedRoute
-                      isAuthenticated={isAuthenticated}
+                      auth={auth}
                       isAdmin={user.role === "admin" ? true : false}
                       adminRoute={true}
                     >
@@ -266,7 +267,7 @@ const App = () => {
                   path="/admin/create/product"
                   element={
                     <ProtectedRoute
-                      isAuthenticated={isAuthenticated}
+                      auth={auth}
                       isAdmin={user.role === "admin" ? true : false}
                       adminRoute={true}
                     >
@@ -278,7 +279,7 @@ const App = () => {
                   path="/admin/update/product/:id"
                   element={
                     <ProtectedRoute
-                      isAuthenticated={isAuthenticated}
+                      auth={auth}
                       isAdmin={user.role === "admin" ? true : false}
                       adminRoute={true}
                     >
@@ -290,7 +291,7 @@ const App = () => {
                   path="/admin/orders"
                   element={
                     <ProtectedRoute
-                      isAuthenticated={isAuthenticated}
+                      auth={auth}
                       isAdmin={user.role === "admin" ? true : false}
                       adminRoute={true}
                     >
@@ -304,7 +305,7 @@ const App = () => {
                   path="/admin/update/order/:id"
                   element={
                     <ProtectedRoute
-                      isAuthenticated={isAuthenticated}
+                      auth={auth}
                       isAdmin={user.role === "admin" ? true : false}
                       adminRoute={true}
                     >
@@ -318,7 +319,7 @@ const App = () => {
                   path="/admin/users"
                   element={
                     <ProtectedRoute
-                      isAuthenticated={isAuthenticated}
+                      auth={auth}
                       isAdmin={user.role === "admin" ? true : false}
                       adminRoute={true}
                     >
@@ -332,7 +333,7 @@ const App = () => {
                   path="/admin/update/user/:id"
                   element={
                     <ProtectedRoute
-                      isAuthenticated={isAuthenticated}
+                      auth={auth}
                       isAdmin={user.role === "admin" ? true : false}
                       adminRoute={true}
                     >
@@ -344,7 +345,7 @@ const App = () => {
                   path="/admin/reviews"
                   element={
                     <ProtectedRoute
-                      isAuthenticated={isAuthenticated}
+                      auth={auth}
                       isAdmin={user.role === "admin" ? true : false}
                       adminRoute={true}
                     >
@@ -358,7 +359,7 @@ const App = () => {
                   path="/admin/create/images"
                   element={
                     <ProtectedRoute
-                      isAuthenticated={isAuthenticated}
+                      auth={auth}
                       isAdmin={user.role === "admin" ? true : false}
                       adminRoute={true}
                     >

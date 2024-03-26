@@ -87,8 +87,16 @@ const ProductDetail = () => {
       alert.error("Out of Stock");
       return;
     }
+
     dispatch(addItemsCart(id, selectedQuantity));
     alert.success("add Items to cart");
+  };
+  const handleByNow = () => {
+    if (stock < 1) {
+      alert.error("Out of Stock");
+      return;
+    }
+    alert.error("This Option is Not Available for Now");
   };
   const settings = {
     dots: true,
@@ -300,7 +308,9 @@ const ProductDetail = () => {
                     >
                       Add to Cart
                     </button>
-                    <button className={styles.buy_now}>Buy Now</button>
+                    <button className={styles.buy_now} onClick={handleByNow}>
+                      Buy Now
+                    </button>
                   </div>
                   <div className={styles["secure-payment"]}>
                     <span>

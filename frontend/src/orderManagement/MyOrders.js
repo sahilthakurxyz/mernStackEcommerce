@@ -72,8 +72,10 @@ const MyOrders = () => {
       alert.error(error);
       dispatch(clearError2());
     }
-    dispatch(myOrders());
   }, [dispatch, alert, error, loading]);
+  useEffect(() => {
+    dispatch(myOrders());
+  }, [dispatch]);
   return (
     <Fragment>
       {loading ? (

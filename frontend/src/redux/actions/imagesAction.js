@@ -1,4 +1,4 @@
-import { BACKEND_URL, BACKEND_URL_PROD } from "../../constants";
+import { attachTokenToRequests, axiosInstance } from "../../constants";
 import {
   imageRequest,
   imageSuccess,
@@ -7,29 +7,28 @@ import {
   getImageSuccess,
   getImageFail,
 } from "../reducers/imagesReducer";
-import axios from "axios";
+
 export const getImages = () => async (dispatch) => {
   try {
     dispatch(getImageRequest());
-    const { data } = await axios.get(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/background/images`
+    const { data } = await axiosInstance.get(
+      `/api/ecommerce/v1/background/images`
     );
-    dispatch(getImageSuccess(data.images));
+    dispatch(getImageSuccess(data?.images));
   } catch (error) {
-    dispatch(getImageFail(error.response.data.message));
+    dispatch(getImageFail(error.respons?.data.message));
   }
 };
 export const createImages = (imageData) => async (dispatch) => {
   try {
+    attachTokenToRequests();
     dispatch(imageRequest());
-    const config = { headers: { "Content-Type": "multipart/form-data" } };
-    const { data } = await axios.post(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/background/images/create/new`,
-      imageData,
-      config
+    const { data } = await axiosInstance.post(
+      `/api/ecommerce/v1/admin/background/images/create/new`,
+      imageData
     );
-    dispatch(imageSuccess(data));
+    dispatch(imageSuccess(data && data));
   } catch (error) {
-    dispatch(imageFail(error.response.data.message));
+    dispatch(imageFail(error.response?.data.message));
   }
 };

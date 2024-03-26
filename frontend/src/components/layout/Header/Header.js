@@ -31,7 +31,7 @@ const Header = () => {
     link1Margin: "1vmax",
     profileIcon: true,
     ProfileIconElement: MdAccountCircle,
-    profileIconUrl: "/login",
+    profileIconUrl: "/account",
 
     profileIconColor: "white",
     searchIcon: true,

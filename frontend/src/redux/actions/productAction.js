@@ -1,4 +1,4 @@
-import { BACKEND_URL_PROD } from "../../constants";
+import { axiosInstance } from "../../constants";
 import {
   allProductRequest,
   allProductSuccess,
@@ -39,12 +39,12 @@ export const getProducts =
   async (dispatch) => {
     try {
       dispatch(allProductRequest());
-      let reqLink = `${BACKEND_URL_PROD}/api/ecommerce/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
+      let reqLink = `/api/ecommerce/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
       if (category) {
-        reqLink = `${BACKEND_URL_PROD}/api/ecommerce/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&ratings[gte]=${ratings}`;
+        reqLink = `/api/ecommerce/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&ratings[gte]=${ratings}`;
       }
 
-      const { data } = await axios.get(reqLink);
+      const { data } = await axiosInstance.get(reqLink);
 
       dispatch(allProductSuccess(data));
     } catch (error) {
@@ -63,8 +63,8 @@ export const getProducts =
 export const getAdminProduct = () => async (dispatch) => {
   try {
     dispatch(adminProductsRequest());
-    const { data } = await axios.get(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/products`
+    const { data } = await axiosInstance.get(
+      `/api/ecommerce/v1/admin/products`
     );
 
     dispatch(adminProductsSuccess(data.products));
@@ -79,9 +79,7 @@ export const clearAllErrors = () => async (dispatch) => {
 export const getProductDetails = (id) => async (dispatch) => {
   try {
     dispatch(productDetailRequest());
-    const { data } = await axios.get(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/product/${id}`
-    );
+    const { data } = await axiosInstance.get(`/api/ecommerce/v1/product/${id}`);
     dispatch(productDetailSuccess(data));
   } catch (error) {
     dispatch(productDetailFail(error.response.data.message));
@@ -94,11 +92,9 @@ export const clearAllErrors2 = () => async (dispatch) => {
 export const createNewProduct = (productData) => async (dispatch) => {
   try {
     dispatch(newProductRequest());
-    const config = { headers: { "Content-Type": "multipart/form-data" } };
-    const { data } = await axios.post(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/product/new`,
-      productData,
-      config
+    const { data } = await axiosInstance.post(
+      `/api/ecommerce/v1/admin/product/new`,
+      productData
     );
     dispatch(newProductSuccess(data));
   } catch (error) {
@@ -111,8 +107,8 @@ export const deleteProduct = (id) => async (dispatch) => {
   try {
     dispatch(deleteProductRequest());
 
-    const { data } = await axios.delete(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/product/${id}`
+    const { data } = await axiosInstance.delete(
+      `/api/ecommerce/v1/admin/product/${id}`
     );
     dispatch(deleteProductSuccess(data.success));
   } catch (error) {
@@ -123,11 +119,9 @@ export const deleteProduct = (id) => async (dispatch) => {
 export const updateProduct = (id, productData) => async (dispatch) => {
   try {
     dispatch(updateProductRequest());
-    const config = { headers: { "Content-Type": "multipart/form-data" } };
-    const { data } = await axios.put(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/admin/product/${id}`,
-      productData,
-      config
+    const { data } = await axiosInstance.put(
+      `/api/ecommerce/v1/admin/product/${id}`,
+      productData
     );
     dispatch(updateProductSuccess(data.success));
   } catch (error) {
@@ -138,13 +132,9 @@ export const updateProduct = (id, productData) => async (dispatch) => {
 export const createNewReview = (reviewData) => async (dispatch) => {
   try {
     dispatch(productReviewRequest());
-    const config = {
-      headers: { "Content-Type": "application/json" },
-    };
-    const { data } = await axios.put(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/review`,
-      reviewData,
-      config
+    const { data } = await axiosInstance.put(
+      `/api/ecommerce/v1/review`,
+      reviewData
     );
 
     dispatch(productReviewSuccess(data));
@@ -161,8 +151,8 @@ export const clearReviewError = () => (dispatch) => {
 export const getAllReviews = (productId) => async (dispatch) => {
   try {
     dispatch(getReviewsRequest());
-    const { data } = await axios.get(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/reviews?id=${productId}`
+    const { data } = await axiosInstance.get(
+      `/api/ecommerce/v1/reviews?id=${productId}`
     );
 
     dispatch(getReviewsSuccess(data.reviews));
@@ -173,8 +163,8 @@ export const getAllReviews = (productId) => async (dispatch) => {
 export const deleteReview = (reviewId, productId) => async (dispatch) => {
   try {
     dispatch(deleteReviewRequest());
-    const { data } = await axios.delete(
-      `${BACKEND_URL_PROD}/api/ecommerce/v1/reviews?id=${reviewId}&productId=${productId}`
+    const { data } = await axiosInstance.delete(
+      `/api/ecommerce/v1/reviews?id=${reviewId}&productId=${productId}`
     );
 
     dispatch(deleteReviewSuccess(data.success));
