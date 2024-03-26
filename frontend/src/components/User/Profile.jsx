@@ -12,7 +12,7 @@ const Profile = () => {
     if (isAuthenticated === false) {
       navigate("/login");
     }
-  }, [navigate, isAuthenticated, loading]);
+  }, [navigate, isAuthenticated]);
   return (
     <>
       {loading ? (
@@ -44,16 +44,28 @@ const Profile = () => {
                   <div className={styles["profile-user-details"]}>
                     <div>
                       <h4 className={styles["details-heading"]}>Full Name</h4>
-                      <p className="details-text">{user.name}</p>
+                      <p className={styles["details-text"]}>{user?.name}</p>
                     </div>
                     <div>
                       <h4 className={styles["details-heading"]}>Email</h4>
-                      <p className="details-text">{user.email} </p>
+                      <p className={styles["details-text"]}>{user?.email} </p>
+                    </div>
+                    <div>
+                      <h4 className={styles["details-heading"]}>Role</h4>
+                      <p
+                        className={
+                          user.role === "admin"
+                            ? styles["green"]
+                            : styles["black"]
+                        }
+                      >
+                        {user.role}{" "}
+                      </p>
                     </div>
                     <div>
                       <h4 className={styles["details-heading"]}>Joined On </h4>
-                      <p className="details-text">
-                        {String(user.createdAt).substring(0, 10)}
+                      <p className={styles["details-text"]}>
+                        {String(user?.createdAt).substring(0, 10)}
                       </p>
                     </div>
                     <div className={styles["profiles-buttons"]}>

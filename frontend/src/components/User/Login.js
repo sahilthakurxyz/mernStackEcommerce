@@ -23,7 +23,7 @@ const Login = () => {
   const { loading, error, isAuthenticated } = useSelector(
     (state) => state.user
   );
-  const redirect = location.state?.redirect || "/";
+  const redirect = location.state?.redirect || "/account";
   useEffect(() => {
     if (error) {
       alert.error(error);

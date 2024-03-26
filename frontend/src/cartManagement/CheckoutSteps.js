@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import styles from "./CheckoutSteps.module.css";
 
 import { Typography, Stepper, StepLabel, Step } from "@material-ui/core";
 import { FaShippingFast } from "react-icons/fa";

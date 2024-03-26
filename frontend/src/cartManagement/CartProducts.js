@@ -17,7 +17,6 @@ const CartProducts = ({ item }) => {
   } = item;
 
   const [qtyItem, setQtyItem] = useState(quantity);
-  const [subtotal, setSubtotal] = useState(0);
   const dispatch = useDispatch();
   const onHandleQty = () => {
     const newQty = qtyItem;

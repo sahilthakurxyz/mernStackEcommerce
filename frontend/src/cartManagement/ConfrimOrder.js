@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import styles from "./ConfirmOrder.module.css";
 import MetaData from "../components/layout/MetaData";
 import CheckoutSteps from "./CheckoutSteps";
-import { Typography, Stepper, StepLabel, Step } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";

@@ -29,12 +29,14 @@ const OpenUserProfile = ({ onClose, user, isAuthenticated }) => {
     };
   }, [onClose]);
   const handleLogOut = () => {
-    if (!user) {
+    if (!isAuthenticated) {
       alert.error("You're not logged In");
       return;
     }
-    dispatch(logout());
-    alert.success("Logout Successfully");
+    if (user) {
+      dispatch(logout());
+      alert.success("Logout Successfully");
+    }
     setTimeout(() => {
       navigate("/login");
     }, 1000);

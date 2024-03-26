@@ -1,9 +1,6 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import styles from "./Payment.module.css";
-import PaymentFailed from "./PaymentFailed.js";
 import { Typography } from "@mui/material";
-import { FaCcVisa } from "react-icons/fa6";
-import { FaCcMastercard } from "react-icons/fa6";
 import {
   CardNumberElement,
   CardCvcElement,
@@ -18,7 +15,6 @@ import MetaData from "../components/layout/MetaData";
 import CheckoutSteps from "./CheckoutSteps";
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { clearError, createNewOrder } from "../redux/actions/orderAction";
 import { attachTokenToRequests, axiosInstance } from "../constants.js";

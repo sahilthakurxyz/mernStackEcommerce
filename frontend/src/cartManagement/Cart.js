@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./Cart.module.css";
 import { FaRupeeSign } from "react-icons/fa";
 import CartProducts from "./CartProducts";
 import { MdOutlineRemoveShoppingCart } from "react-icons/md";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { FaCheckCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +19,7 @@ const Cart = () => {
   cartItems.map((item) => {
     subtotal += Number(item.quantity);
     subtotalPrice += item.totalPrice;
+    return "";
   });
   const checkoutHandle = () => {
     if (cartItems.length === 0) {

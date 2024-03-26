@@ -4,7 +4,6 @@ import { Link, useLocation } from "react-router-dom";
 import { MdSmsFailed } from "react-icons/md";
 const PaymentFailed = () => {
   const location = useLocation();
-  // console.log(location.state.errorMessage);
   return (
     <div className={styles["fail-main-container"]}>
       <div>

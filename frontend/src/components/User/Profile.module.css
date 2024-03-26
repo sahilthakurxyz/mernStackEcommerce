@@ -76,7 +76,6 @@
 }
 .profile-user-details > div > p{
     margin-top: -1vmax;
-    color: gray;
     font-size: 15px;
     font-weight: 500;
     font-family: 'Rubik', sans-serif;
@@ -99,4 +98,10 @@
 }
 .user-profile-button:focus{
     outline: none;
+}
+.green{
+    color: green;
+}
+.black{
+    color: black;
 }
