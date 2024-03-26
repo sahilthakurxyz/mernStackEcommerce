@@ -14,20 +14,9 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
   const path = require("path");
   require("dotenv").config({ path: "backend/config/.env" });
 }
-// Allow requests from specific origin(s)
-const allowedOrigins = [
-  "https://6602f9518617a754426d01d3--zippy-bunny-9be2ad.netlify.app",
-  // Add more origins if needed
-];
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  origin: "https://6602f9518617a754426d01d3--zippy-bunny-9be2ad.netlify.app",
+  methods: "GET,PUT,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 204,
 };
