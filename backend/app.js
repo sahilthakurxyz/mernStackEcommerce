@@ -15,12 +15,24 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
   require("dotenv").config({ path: "backend/config/.env" });
 }
 const corsOptions = {
-  origin: "*", // Replace with the actual origin of your frontend
+  origin: function (origin, callback) {
+    // Allow requests from all origins when origin is undefined (e.g., non-browser clients)
+    if (!origin) {
+      callback(null, true);
+      return;
+    }
+
+    // Check if the origin is allowed
+    if (origin === "http://localhost:3000") {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 204,
 };
-
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
