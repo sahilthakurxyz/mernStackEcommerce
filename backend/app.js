@@ -14,19 +14,14 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
   const path = require("path");
   require("dotenv").config({ path: "backend/config/.env" });
 }
+// Allow requests from specific origin(s)
+const allowedOrigins = [
+  "https://6602f9518617a754426d01d3--zippy-bunny-9be2ad.netlify.app",
+  // Add more origins if needed
+];
 const corsOptions = {
   origin: function (origin, callback) {
-    // Allow requests from all origins when origin is undefined (e.g., non-browser clients)
-    if (!origin) {
-      callback(null, true);
-      return;
-    }
-
-    // Check if the origin is allowed
-    if (
-      origin ===
-      "https://6602f9518617a754426d01d3--zippy-bunny-9be2ad.netlify.app/"
-    ) {
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
@@ -36,11 +31,11 @@ const corsOptions = {
   credentials: true,
   optionsSuccessStatus: 204,
 };
+app.use(cors(corsOptions));
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors(corsOptions));
 app.use(
   fileUpload({
     useTempFiles: true,
