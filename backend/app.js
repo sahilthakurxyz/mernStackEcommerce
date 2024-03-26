@@ -23,7 +23,10 @@ const corsOptions = {
     }
 
     // Check if the origin is allowed
-    if (origin === "http://localhost:3000") {
+    if (
+      origin ===
+      "https://6602f9518617a754426d01d3--zippy-bunny-9be2ad.netlify.app/"
+    ) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
