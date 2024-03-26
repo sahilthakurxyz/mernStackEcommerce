@@ -6,15 +6,16 @@ const userRouter = require("./routes/userRoute");
 const payment = require("./routes/paymentRoute");
 const orderRouter = require("./routes/orderRoute");
 const bodyParser = require("body-parser");
-const path = require("path");
+
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
 // Config
 if (process.env.NODE_ENV !== "PRODUCTION") {
+  const path = require("path");
   require("dotenv").config({ path: "backend/config/.env" });
 }
 const corsOptions = {
-  origin: process.env.FRONTEND_URL, // Replace with the actual origin of your frontend
+  origin: "*", // Replace with the actual origin of your frontend
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 204,
