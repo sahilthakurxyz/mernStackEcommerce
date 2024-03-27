@@ -14,18 +14,19 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
   const path = require("path");
   require("dotenv").config({ path: "backend/config/.env" });
 }
-const corsOptions = {
-  origin: process.env.FRONTEND_URL, // Replace with the actual origin of your frontend
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true,
-  optionsSuccessStatus: 204,
-};
-
+const corsOptions = {};
+app.use(
+  cors({
+    origin: ["https://ecommerce-frontend-five-ebon.vercel.app"],
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+  })
+);
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors(corsOptions));
+
 app.use(
   fileUpload({
     useTempFiles: true,
