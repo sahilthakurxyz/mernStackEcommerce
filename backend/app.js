@@ -14,19 +14,19 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
   const path = require("path");
   require("dotenv").config({ path: "backend/config/.env" });
 }
-const corsOptions = {};
+
+const app = express();
+app.use(express.json());
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: ["https://ecommerce-frontend-five-ebon.vercel.app"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
+    optionsSuccessStatus: 204,
   })
 );
-const app = express();
-app.use(express.json());
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(
   fileUpload({
     useTempFiles: true,
