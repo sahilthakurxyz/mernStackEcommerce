@@ -71,6 +71,7 @@ const App = () => {
     getStripeApiKey();
   }, [dispatch]);
   // window.addEventListener("contextmenu", (e) => e.preventDefault());
+
   return (
     <Fragment>
       {loading === false && (

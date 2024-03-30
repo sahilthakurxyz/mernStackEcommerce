@@ -77,10 +77,10 @@
 }
 
 
-@media only screen and (max-width:1000px){
+@media only screen and (max-width:600px){
     .homeHeader{
         position: relative;
-        margin-top:1.9rem ;
+        margin-top:-2.3rem ;
         display: flex;
         justify-content: center;
         margin-left: auto;
@@ -90,17 +90,17 @@
     }
     .image{
         position: relative;
-        top: -8rem;
+        top: -11rem;
     }
     .image .left{
         position: relative;
-        top: 8rem;
+        top: 9rem;
        height: 50px;
        width: 0;
     }
     .image .right{
         position: relative;
-        top: 8rem;
+        top: 9rem;
        height: 50px;
        width: 0;
     }

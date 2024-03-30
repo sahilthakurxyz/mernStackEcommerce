@@ -49,15 +49,8 @@ const NavMenu = () => {
         <Link style={{ textDecoration: "none" }} to="/Cart">
           <div className={styles.navmenu_cart}>
             <div className={styles.navmenu_sameClass_name}>
-              <MdOutlineLocalGroceryStore
-                style={{
-                  fontSize: "2rem",
-                  borderRadius: "5px",
-                  color: "#405166",
-                }}
-              />
+              <MdOutlineLocalGroceryStore />
             </div>
-            <span></span>
             <p className={styles["navmenu-cart-title"]}>{cartItems.length}</p>
           </div>
         </Link>
