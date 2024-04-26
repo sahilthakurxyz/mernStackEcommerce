@@ -2,7 +2,6 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import StarIcon from "@mui/icons-material/Star";
-
 const ReadOnlyStarRating = ({ ratings }) => {
   return (
     <Box>

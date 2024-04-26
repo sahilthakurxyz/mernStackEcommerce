@@ -18,6 +18,7 @@
 // module.exports = sendToken;
 const sendToken = (user, statusCode, res) => {
   const token = user.getJWTToken(); // Simulate getting the JWT token
+
   res.setHeader("Authorization", `Bearer ${token}`);
   res.status(statusCode).json({
     success: true,

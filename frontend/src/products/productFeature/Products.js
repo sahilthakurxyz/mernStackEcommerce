@@ -79,6 +79,7 @@ const Products = () => {
                   min={0}
                   max={600000}
                   aria-labelledby="range-slider"
+                  className={styles["slider-main"]}
                   valueLabelDisplay="auto"
                   onChangeCommitted={handlePriceChangeCommitted}
                 />

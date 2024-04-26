@@ -20,25 +20,26 @@ const Login = () => {
   const alert = useAlert();
   const location = useLocation();
   const navigate = useNavigate();
+
   const { loading, error, isAuthenticated } = useSelector(
     (state) => state.user
   );
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+    dispatch(login(loginEmail, loginPassword));
+  };
   const redirect = location.state?.redirect || "/account";
   useEffect(() => {
     if (error) {
-      alert.error(error);
       dispatch(loginClearError());
     }
-  }, [dispatch, error, alert, navigate]);
+  }, [dispatch, error]);
   useEffect(() => {
     if (isAuthenticated) {
       navigate(redirect);
     }
   }, [isAuthenticated, navigate, redirect]);
-  const handleLoginSubmit = (e) => {
-    e.preventDefault();
-    dispatch(login(loginEmail, loginPassword));
-  };
+
   return (
     <Fragment>
       {loading ? (

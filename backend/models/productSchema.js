@@ -76,6 +76,10 @@ const productSchema = new mongoose.Schema({
         ref: "user",
         required: true,
       },
+      profile: {
+        type: String,
+        required: true,
+      },
     },
   ],
   user: {

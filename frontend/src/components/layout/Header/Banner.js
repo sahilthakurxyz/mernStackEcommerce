@@ -42,7 +42,7 @@ const Banner = () => {
     );
   };
   return (
-    <div className={styles.homeHeader}>
+    <div className={styles["homeHeader"]}>
       {backImages && images.length > 0 && (
         <div
           className={styles.image}
@@ -60,8 +60,8 @@ const Banner = () => {
               }}
             />
           </div>
-          <div className={styles.center}> </div>
-          <div className={styles.right} onClick={handleNextImage}>
+          <div className={styles["center"]}> </div>
+          <div className={styles["right"]} onClick={handleNextImage}>
             <FaAngleRight
               style={{
                 fontSize: 30,

@@ -8,9 +8,21 @@ const isAuthenticatedUser = handleAsyncError(async (req, res, next) => {
   if (!token) {
     return next(new ErrorHandler("Please login to access this resource", 401));
   }
-  const decodedData = jwt.verify(token, process.env.JWT_SECRET);
-  req.user = await User.findById(decodedData.id);
-  next();
+  try {
+    const decodedData = jwt.verify(token, process.env.JWT_SECRET);
+    if (Date.now() >= decodedData.exp * 1000) {
+      return next(
+        new ErrorHandler("Your session has expired. Please login again.", 401)
+      );
+    }
+    req.user = await User.findById(decodedData.id);
+    next();
+  } catch (error) {
+    // Handle invalid or expired token errors
+    return next(
+      new ErrorHandler("Invalid Authentication. Please login again.", 401)
+    );
+  }
 });
 const authoriseRoles = (...roles) => {
   return (req, res, next) => {

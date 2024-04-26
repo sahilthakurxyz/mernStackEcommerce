@@ -42,7 +42,7 @@
 }
 .products-center-container {
     
-    flex-grow: 1; /* Takes up remaining available space */
+    flex-grow: 1; 
   display: flex;
   flex-direction: column;
   width: 100%;

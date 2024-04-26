@@ -67,6 +67,11 @@ exports.createProduct = handleAsyncOperation(async (req, res, next) => {
   for (let i = 0; i < images.length; i++) {
     const result = await cloudinary.uploader.upload(images[i], {
       folder: "products",
+      transformation: {
+        width: 800,
+        height: 600,
+        quality: "auto:good",
+      },
     });
     imagesLinks.push({
       public_id: result.public_id,
@@ -120,6 +125,11 @@ exports.updateProduct = handleAsyncOperation(async (req, res, next) => {
     for (let i = 0; i < images.length; i++) {
       const result = await cloudinary.uploader.upload(images[i], {
         folder: "products",
+        transformation: {
+          width: 800,
+          height: 600,
+          quality: "auto:good",
+        },
       });
       imagesLinks.push({
         public_id: result.public_id,
@@ -142,12 +152,13 @@ exports.updateProduct = handleAsyncOperation(async (req, res, next) => {
 
 // create new review or update the review
 exports.reviewsProduct = handleAsyncOperation(async (req, res, next) => {
-  const { rating, comment, productId } = req.body;
+  const { rating, comment, productId, profile } = req.body;
   const review = {
     name: req.user.name,
     user: req.user._id,
     rating: Number(rating),
     comment,
+    profile,
   };
   const product = await Product.findById(productId);
   const isReviewed = product.reviews.find(
@@ -158,6 +169,7 @@ exports.reviewsProduct = handleAsyncOperation(async (req, res, next) => {
     if (isReviewed.user.toString() === req.user._id.toString()) {
       isReviewed.rating = rating;
       isReviewed.comment = comment;
+      isReviewed.profile = profile;
     }
   } else {
     // Add a new review
