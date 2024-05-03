@@ -81,7 +81,7 @@ exports.forgotPassword = handleAsyncOperation(async (req, res, next) => {
   // const message = `your reset password token is :- \n\n ${resetPasswordUrl} \n\n if you have not requested this email then, please ignore this `;
 
   await user.save({ validateBeforeSave: false });
-  const resetPasswordUrl = `${FRONTEND_URL}/reset/password/${resetToken}`;
+  const resetPasswordUrl = `${process.env.FRONTEND_URL}/reset/password/${resetToken}`;
   const message = `your reset password token is :- \n\n ${resetPasswordUrl} \n\n if you have not requested this email then, please ignore this `;
 
   try {
