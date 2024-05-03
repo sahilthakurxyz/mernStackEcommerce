@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
     // origin: ["http://localhost:3000"],
-    origin: ["https://ecommerce-frontend-five-ebon.vercel.app"],
+    origin: ["https://your-personal-shop.vercel.app"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
     optionsSuccessStatus: 204,
