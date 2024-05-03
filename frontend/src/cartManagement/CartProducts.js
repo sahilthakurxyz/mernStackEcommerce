@@ -32,7 +32,7 @@ const CartProducts = ({ item }) => {
   const handleDelete = () => {
     dispatch(removeItemFromCart(productId));
   };
-  useEffect(() => {});
+
   return (
     <div className={styles["item-main-box"]}>
       <div className={styles["item-box"]}>

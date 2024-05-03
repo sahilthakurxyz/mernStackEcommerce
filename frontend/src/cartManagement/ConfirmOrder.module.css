@@ -4,9 +4,7 @@ padding: 10px;
     display: grid;
     grid-template-columns: 6fr 3fr;
 }
-/* .confirm-order-container > div:last-child{
-    border-left: 1px solid #9da39d;
-} */
+
 .confirm-shipping-area{
     padding: 2vmax 5vmax;
     padding-bottom: 0%;

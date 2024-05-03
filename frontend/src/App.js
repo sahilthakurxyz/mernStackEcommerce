@@ -273,7 +273,6 @@ const App = () => {
                 <Suspense fallback={<Loading />}>
                   <ProtectedRoute auth={auth}>
                     <Header />
-
                     <MyOrders />
                   </ProtectedRoute>
                 </Suspense>
