@@ -6,8 +6,10 @@ const Loading = () => {
       <div className="loader"></div>
       <p>Please wait, your website is loading...</p>
       <p>
-        The loading time depends on your internet connection and browser. We
-        appreciate your patience.
+        Behind the scenes magic! We're gathering the information you need for a
+        fantastic experience. This is a one-time wait of about 15-20 seconds on
+        your first visit. Thanks for your patience! The loading time depends on
+        your internet connection and browser. We appreciate your patience.
       </p>
     </div>
   );

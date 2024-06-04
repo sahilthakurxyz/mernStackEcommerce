@@ -86,10 +86,10 @@ export const register = (userData) => async (dispatch) => {
 // get user if user is login
 export const loadUser = () => async (dispatch) => {
   try {
-    attachTokenToRequests();
     dispatch(loadUserRequest());
     const { data } = await axiosInstance.get(`/api/ecommerce/v1/profile`);
-
+    const user = localStorage.getItem("user");
+    console.log(user, "user");
     dispatch(loadUserSuccess(data?.user));
   } catch (error) {
     dispatch(loadUserFail(error.response?.data.message));
@@ -114,7 +114,6 @@ export const logout = () => async (dispatch) => {
 // Update Profile
 export const updateProfile = (userData) => async (dispatch) => {
   try {
-    attachTokenToRequests();
     dispatch(updateProfileRequest());
     const { data } = await axiosInstance.put(
       `/api/ecommerce/v1/profile/update`,

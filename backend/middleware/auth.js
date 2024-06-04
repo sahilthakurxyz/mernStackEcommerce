@@ -10,6 +10,7 @@ const isAuthenticatedUser = handleAsyncError(async (req, res, next) => {
   }
   try {
     const decodedData = jwt.verify(token, process.env.JWT_SECRET);
+
     if (Date.now() >= decodedData.exp * 1000) {
       return next(
         new ErrorHandler("Your session has expired. Please login again.", 401)
